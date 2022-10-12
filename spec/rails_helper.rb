@@ -4,6 +4,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 #Factory Bot
 require "support/factory_bot"
+#Devise
+require "support/devise"
+require "support/devise_request"
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
@@ -62,4 +65,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  #Devise request
+  config.include DeviseRequestSpecHelper, type: :request
 end

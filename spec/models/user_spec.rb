@@ -28,4 +28,15 @@ RSpec.describe User, type: :model do
 
   end 
 
+  describe "console create action" do
+  
+    it "should create a new user with an account" do
+
+      expect { User.create_console_user("john@doe.com", "password") }.to change{ User.count }.by(1)
+      expect { User.create_console_user("john2@doe.com", "password") }.to change{ Account.count }.by(1)
+      
+    end
+
+  end
+
 end

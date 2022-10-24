@@ -68,4 +68,6 @@ RSpec.configure do |config|
 
   #Devise request
   config.include DeviseRequestSpecHelper, type: :request
+
+  config.include Rails.application.routes.url_helpers, type: :request
 end

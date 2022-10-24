@@ -23,6 +23,11 @@ RSpec.describe Transference, type: :model do
       expect(transference).to_not be_valid
     end
 
+    it "should have a final balance" do
+      transference = build(:transference, final_balance: nil)
+      expect(transference).to_not be_valid
+    end
+
     it "should have an account" do
       transference = build(:transference, account: nil)
       expect(transference).to_not be_valid

@@ -4,6 +4,7 @@ class CreateTransferences < ActiveRecord::Migration[7.0]
       t.integer :amount, null: false
       t.integer :sender, null: true
       t.integer :receiver,  null: false
+      t.integer :final_balance,  null: false
       t.belongs_to :account, null: false, foreign_key: true
 
       t.timestamps

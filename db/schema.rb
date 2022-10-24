@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_15_092212) do
     t.integer "amount", null: false
     t.integer "sender"
     t.integer "receiver", null: false
+    t.integer "final_balance", null: false
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

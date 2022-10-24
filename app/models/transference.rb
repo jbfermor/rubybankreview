@@ -3,17 +3,17 @@ class Transference < ApplicationRecord
 
   validates :amount, presence: true
   validates :receiver, presence: true
+  validates :final_balance, presence: true
   validates :account, presence: true
   validates_associated :account
 
+
   private
 
-  def self.console_create_transference(amount, receiver)
-    
+  def self.console_create_transference(amount, receiver) 
     receiver_email = User.find_by(email: receiver)
-    account = Account.find_by(user: receiver_email)
-    Transference.create!(amount: amount, receiver: receiver, account: account )
-    
+    account = receiver_email.account
+    Transference.create!(amount: amount, receiver: receiver, final_balance: account.balance + amount, account: account )
   end
 
 end

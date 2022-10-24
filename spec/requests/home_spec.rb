@@ -7,7 +7,7 @@ RSpec.describe "Homes", type: :request do
   describe "GET /index" do
     it "redirect_to root" do
       login_as(user)
-      get "/home/index"
+      get "/"
       expect(response).to have_http_status(200)
       expect(response.body).to include("Home")
     end

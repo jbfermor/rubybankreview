@@ -1,7 +1,14 @@
 require 'rails_helper'
 
-#RSpec.describe "Transferences", type: :request do
-#  describe "GET /index" do
-#    pending "add some examples (or delete) #{__FILE__}"
-#  end
-#end
+RSpec.describe "Transferences", type: :request do
+
+  describe "POST /transferences" do
+
+    it "should create a new transaction" do
+      post "/transferences"
+      expect(response).to have_http_status(302)
+    end
+    
+  end
+
+end

@@ -11,12 +11,11 @@ module TransferenceServices
     end
   
     def call
+      @sender_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: sender_balance, account_id: sender_account.id)
+      @receiver_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: receiver_balance, account_id: receiver_account.id)
       receiver_account.with_lock do
         sender_account.with_lock do
-          @sender_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: sender_balance, account_id: sender_account.id)
-          if @sender_transference.save
-            Transference.create(amount: @amount, receiver: @receiver, sender: @sender, final_balance: receiver_balance, account_id: receiver_account.id)
-          end
+          save_if_possible(@receiver_transference) if save_if_possible(@sender_transference)
         end
       end
     end 
@@ -36,10 +35,6 @@ module TransferenceServices
     def receiver_balance
       receiver_account.balance + @amount
     end
-
-    def possible?
-      different_users? && balance_enough?
-    end
   
     def different_users?
       @sender != @receiver
@@ -49,6 +44,14 @@ module TransferenceServices
       sender_account.balance - @amount >= 0
     end
 
+    def possible?
+      different_users? && balance_enough?
+    end    
+
+    def save_if_possible(transference)
+      transference.save if possible?
+    end
+
   end
-  
+
 end

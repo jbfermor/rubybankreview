@@ -29,11 +29,13 @@ module TransferenceServices
     end
 
     def sender_balance
-      sender_account.balance - @amount
+      AccountServices::AccountSenderUpdateService.new(amount, sender_account.id).call
+      sender_account.balance
     end
 
     def receiver_balance
-      receiver_account.balance + @amount
+      AccountServices::AccountReceiverUpdateService.new(amount, receiver_account.id).call
+      receiver_account.balance
     end
   
     def different_users?
@@ -46,7 +48,7 @@ module TransferenceServices
 
     def possible?
       different_users? && balance_enough?
-    end    
+    end
 
     def save_if_possible(transference)
       transference.save if possible?

@@ -1,1 +1,26 @@
-<h1>User Show</h1>
+<h1><% @user.email %> Show</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Sender</th>
+      <th>Receiver</th>
+      <th>Amount</th>
+      <th>Final Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @transferences.empty? %>
+      <% @transferences.each do |t| %>
+        <tr>
+          <td><% t.created_at.strftime("%d/%m/%Y") %></td>
+          <td><% review(t.sender)  %></td>
+          <td><% review(t.receiver)  %></td>
+          <td><% t.amount  %></td>
+          <td><% t.final_balance  %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

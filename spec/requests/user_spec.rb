@@ -11,7 +11,7 @@ RSpec.describe "Show User", type: :request do
     login_as(current_user)
     get "/users/#{current_user.id}"
     expect(response).to have_http_status(200)
-    expect(response.body).to include("User")
+    expect(response.body).to include("Show")
     
   end
   

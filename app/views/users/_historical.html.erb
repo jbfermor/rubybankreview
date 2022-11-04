@@ -1,0 +1,31 @@
+<div class="m-2 p3">
+  <h3>Historical</h3>
+</div>
+<div class="m-2 p3">
+  <% if @transferences.empty? %>
+    <p>No transferences between users yet</p>
+  <% else %>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Qty</th>
+          <th>Date</th>
+          <th>Ordered from</th>
+          <th>Ordered To</td>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @transferences.each do |transference| %>
+          <tr>
+            <td><%= transference.amount %></td>
+            <td><%= transference.created_at.strftime("%d/%m/%y") %></td>
+            <td><%= show_sender(transference.sender) %></td>
+            <td><%= show_receiver(transference.receiver) %></td>
+            <td><%= transference.final_balance %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

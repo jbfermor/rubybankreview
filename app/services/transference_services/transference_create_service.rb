@@ -11,11 +11,11 @@ module TransferenceServices
     end
   
     def call
-      @sender_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: sender_balance, account_id: sender_account.id)
-      @receiver_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: receiver_balance, account_id: receiver_account.id)
+      @sender_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: sender_balance_update, account_id: sender_account.id)
+      @receiver_transference = Transference.new(amount: @amount, receiver: @receiver, sender: @sender, final_balance: receiver_balance_update, account_id: receiver_account.id)
       receiver_account.with_lock do
         sender_account.with_lock do
-          save_if_possible(@receiver_transference) if save_if_possible(@sender_transference)
+          save_receiver_if_possible(@receiver_transference) if save_sender_if_possible(@sender_transference)
         end
       end
     end 
@@ -28,14 +28,12 @@ module TransferenceServices
       User.find(@receiver).account
     end
 
-    def sender_balance
-      AccountServices::AccountSenderUpdateService.new(amount, sender_account.id).call
-      sender_account.balance
+    def sender_balance_update
+      sender_account.balance - amount
     end
 
-    def receiver_balance
-      AccountServices::AccountReceiverUpdateService.new(amount, receiver_account.id).call
-      receiver_account.balance
+    def receiver_balance_update
+      receiver_account.balance + amount
     end
   
     def different_users?
@@ -50,8 +48,18 @@ module TransferenceServices
       different_users? && balance_enough?
     end
 
-    def save_if_possible(transference)
-      transference.save if possible?
+    def save_sender_if_possible(transference)
+      if possible?
+        transference.save
+        AccountServices::AccountUpdateService.new(transference.final_balance, transference.sender).call
+      end
+    end
+
+    def save_receiver_if_possible(transference)
+      if possible?
+        transference.save
+        AccountServices::AccountUpdateService.new(transference.final_balance, transference.receiver ).call
+      end
     end
 
   end

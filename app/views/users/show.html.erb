@@ -1,6 +1,6 @@
 <div class="container">
   <div class="m-2 p-3 shadow">
-    <h2>Welcome to the page of <%= @user.username %></h2>
+    <h2>Welcome to the page of <%= @user.email %></h2>
   </div>
   
   <% if current_user == @user %>
@@ -9,7 +9,7 @@
     <p><%= @user.account.balance %></p>
   </div>
   <div class="m-2 p-3 shadow">
-    <%= render "transactions/form" %>
+    <%= render "transferences/form" %>
   </div>
   <div class="m-2 p-3 shadow">
     <%= render "users/historical" %>

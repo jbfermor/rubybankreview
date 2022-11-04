@@ -14,7 +14,10 @@ class Transference < ApplicationRecord
     puts receiver_email
     receiver = User.find_by(email: receiver_email)
     account = receiver.account
-    Transference.create( amount: amount, sender: nil, receiver: receiver.id, final_balance: account.balance + amount, account: account ) unless receiver.nil?
+    transference = Transference.new( amount: amount, sender: nil, receiver: receiver.id, final_balance: account.balance + amount, account: account ) unless receiver.nil?
+    if transference.save
+      account.update(balance: account.balance + amount)
+    end
   end
 
 end

@@ -13,13 +13,24 @@ module UsersHelper
     #Return CONSOLE if the transfer was through console
   #Return sender username if was between users
   def show_sender(sender)
-    sender == nil ? "CONSOLE" : User.find_by(account: Account.find(sender)).username
+    if sender.nil? 
+      "CONSOLE" 
+    else
+      user = User.find(sender)
+      user.email == current_user.email ? "This account" : user.email
+    end
   end
 
   #Return THIS CCOUNT if the transfer was received
   #Return receiver if was sent
   def show_receiver(receiver)
-    Account.find(receiver) == current_user.account ? "This account" : User.find_by(account: Account.find(receiver)).username
+    user = User.find(receiver)
+    user.account == current_user.account ? "This account" : user.email
+  end
+
+  def amount_str(receiver, amount)
+    user = User.find(receiver)
+    user.email == current_user.email ? "+ " + amount.to_s : "- " + amount.to_s
   end
 
 end

@@ -5,14 +5,15 @@ require 'rails_helper'
 
 RSpec.describe "Show User", type: :request do
 
-  let(:current_user) { create(:user) }
+  let(:user) { create(:user) }
+  let(:account) { create(:account) }
 
-  it "GET #show" do
-    login_as(current_user)
-    get "/users/#{current_user.id}"
+  it "GET #show" do   
+    sign_in(user)
+    puts user.email
+    get "/users/#{user.id}"
     expect(response).to have_http_status(200)
-    expect(response.body).to include("Show")
-    
+    expect(response.body).to include("Welcome")   
   end
   
   

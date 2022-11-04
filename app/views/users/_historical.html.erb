@@ -16,13 +16,13 @@
         </tr>
       </thead>
       <tbody>
-        <% @transferences.each do |transference| %>
+        <% @transferences.each do |t| %>
           <tr>
-            <td><%= transference.amount %></td>
-            <td><%= transference.created_at.strftime("%d/%m/%y") %></td>
-            <td><%= show_sender(transference.sender) %></td>
-            <td><%= show_receiver(transference.receiver) %></td>
-            <td><%= transference.final_balance %></td>
+            <td><%= amount_str(t.receiver, t.amount) %></td>
+            <td><%= t.created_at.strftime("%d/%m/%y") %></td>
+            <td><%= show_sender(t.sender) %></td>
+            <td><%= show_receiver(t.receiver) %></td>
+            <td><%= t.final_balance %></td>
           </tr>
         <% end %>
       <% end %>

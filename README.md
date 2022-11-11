@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+In order to use this programm, please have in mind the following:
 
-Things you may want to cover:
+To create a new user by console you must use:
+  User.create_console_user(email, password)
+  Both must be text
 
-* Ruby version
+  Being email the mail account of the user and password a security password to access
 
-* System dependencies
+To make a transference to a user by console, the command is:
+  Transference.console_create_transference(amount, receiver_email)
 
-* Configuration
+  Amount is the money quantity we want to transference to an user. It is a number
+  Receiver_email is the email of the user that will receive the amount of money indicated previously. It is a text
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

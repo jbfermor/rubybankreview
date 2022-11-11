@@ -9,8 +9,8 @@ class User < ApplicationRecord
 
   has_one :account, dependent: :destroy
 
-  def self.create_console_user(username, password)
-    UserServices::UserCreateService.new(username, password).call
+  def self.create_console_user(email, password)
+    UserServices::UserCreateService.new(email, password).call
   end
 
 end

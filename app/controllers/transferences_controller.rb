@@ -15,7 +15,7 @@ class TransferencesController < ApplicationController
   end
 
   def transference_receiver
-    @receiver = User.find_by(email: params[:email]).id
+    @receiver = User.find_by(email: params[:email]) ?  User.find_by(email: params[:email]).id : nil
   end
 
 end
